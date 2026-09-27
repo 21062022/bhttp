@@ -1,27 +1,29 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
-echo -e "\n INSTALADOR OFICIAL - J HAZAEL MORENO"
-echo "========================================"
+echo -e "\n📦 PANEL X8 + BHTTP — INSTALADOR OFICIAL"
+echo "============================================="
 
+# Verificar root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "❌ Ejecuta este script como root: sudo bash instalar.sh"
+    echo "❌ Ejecutá como root: sudo ./instalar.sh"
     exit 1
 fi
 
-echo "📁 Configurando directorios del sistema..."
-mkdir -p /etc/bhttp
-mkdir -p /usr/local/lib/bhttp
+# Instalar BHTTP
+echo "📦 Instalando BHTTP..."
+mkdir -p /etc/ADMcgh/bin
+cp BHTTP-binario /etc/ADMcgh/bin/BHTTP
+chmod +x /etc/ADMcgh/bin/BHTTP
 
-if [ -f "hazael.sh" ]; then
-    echo "💻 Instalando panel de control..."
-    cp hazael.sh /usr/local/bin/hazael
-    chmod +x /usr/local/bin/hazael
-    echo "✔ Panel instalado correctamente."
-else
-    echo "⚠ Advertencia: No se encontró 'hazael.sh' en esta misma carpeta."
-    echo "  Coloca 'hazael.sh' junto a este instalador y vuelve a ejecutarlo."
-fi
+# Instalar Panel y crear comando global 'adm'
+echo "💻 Instalando Panel..."
+cp panelx8.sh /usr/local/bin/panelx8
+chmod +x /usr/local/bin/panelx8
 
-echo -e "\n🎉 ¡INSTALACIÓN COMPLETADA!"
-echo "👉 Escribe en cualquier momento para abrir tu panel: hazael"
+# Crear enlace directo para 'adm'
+ln -sf /usr/local/bin/panelx8 /usr/local/bin/adm
+chmod +x /usr/local/bin/adm
+
+echo -e "\n✅ ¡TODO LISTO!"
+echo "👉 Escribí 'adm' para abrir el panel desde cualquier lugar."
